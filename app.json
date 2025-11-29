@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "native-app",
-    "slug": "native-app",
+    "name": "Purple-School-App",
+    "slug": "Purple-School-App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/img/icon.png",
@@ -153,6 +153,9 @@
           }
         }
       ]
-    ]
+    ],
+    "experiments": {
+      "tsconfigPaths": true
+    }
   }
 }
