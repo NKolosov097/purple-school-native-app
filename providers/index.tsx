@@ -1,7 +1,12 @@
 import { PropsWithChildren } from "react"
 
 import { NotificationProvider } from "./notification-provider/notification.provider"
+import { ThemeProvider } from "./theme-provider/theme-provider"
 
 export const Providers = ({ children }: PropsWithChildren) => {
-  return <NotificationProvider>{children}</NotificationProvider>
+  return (
+    <ThemeProvider>
+      <NotificationProvider>{children}</NotificationProvider>
+    </ThemeProvider>
+  )
 }
