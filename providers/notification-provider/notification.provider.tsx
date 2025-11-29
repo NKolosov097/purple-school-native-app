@@ -7,7 +7,7 @@ import {
 } from "react"
 import { Animated, StyleSheet, Text, View } from "react-native"
 
-import { COLORS, RADIUSES } from "@/shared/config/tokens"
+import { COLORS, RADIUSES } from "@shared/config/tokens"
 
 import {
   ToastConfig,

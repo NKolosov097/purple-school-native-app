@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { Image, StyleSheet, Text, View } from "react-native"
 
-import { COLORS, FONTS, GAPS } from "@/shared/config/tokens"
-import { Button } from "@/shared/ui/button/button"
-import { Input } from "@/shared/ui/input/input"
+import { COLORS, FONTS, GAPS } from "@shared/config/tokens"
+import { Button } from "@shared/ui/button/button"
+import { Input } from "@shared/ui/input/input"
 
-import { useNotification } from "@/features/model/useNotification"
+import { useNotification } from "@features/model/useNotification"
 
 interface IForm {
   email: string

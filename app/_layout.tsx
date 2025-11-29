@@ -4,7 +4,7 @@ import "react-native-reanimated"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 
 import { Providers } from "@/providers"
-import { COLORS } from "@/shared/config/tokens"
+import { COLORS } from "@shared/config/tokens"
 
 export default function RootLayout() {
   return (

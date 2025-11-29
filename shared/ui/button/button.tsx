@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native"
 
-import { COLORS, RADIUSES } from "@/shared/config/tokens"
+import { COLORS, RADIUSES } from "@shared/config/tokens"
 
 interface IButtonProps extends PressableProps {
   variant?: "default" | "primary" | "link"

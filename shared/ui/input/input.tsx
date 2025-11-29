@@ -7,9 +7,9 @@ import {
   View,
 } from "react-native"
 
-import { COLORS, FONTS, RADIUSES } from "@/shared/config/tokens"
-import { EyeClosedIcon } from "@/shared/icons/EyeClosed"
-import { EyeOpenedIcon } from "@/shared/icons/EyeOpened"
+import { COLORS, FONTS, RADIUSES } from "@shared/config/tokens"
+import { EyeClosedIcon } from "@shared/icons/EyeClosed"
+import { EyeOpenedIcon } from "@shared/icons/EyeOpened"
 
 interface IInputProps extends TextInputProps {
   type?: "password"

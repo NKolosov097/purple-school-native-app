@@ -10,11 +10,11 @@
     "resolveJsonModule": true,
     "paths": {
       "@/*": ["./*"],
-      "@shared": ["./shared/*"],
-      "@features": ["./features/*"],
-      "@providers": ["./providers/*"],
-      "@entities": ["./entities/*"],
-      "@hooks": ["./hooks/*"]
+      "@shared/*": ["./shared/*"],
+      "@features/*": ["./features/*"],
+      "@providers/*": ["./providers/*"],
+      "@entities/*": ["./entities/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
