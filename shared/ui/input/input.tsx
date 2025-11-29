@@ -1,17 +1,15 @@
 import { useState } from "react"
 import {
+  Pressable,
+  StyleSheet,
   TextInput,
   TextInputProps,
-  StyleSheet,
-  Pressable,
   View,
-  Text,
 } from "react-native"
 
-import { RADIUSES, COLORS, FONTS } from "../../config/tokens"
-
-import { EyeClosedIcon } from "../../icons/EyeClosed"
-import { EyeOpenedIcon } from "../../icons/EyeOpened"
+import { COLORS, FONTS, RADIUSES } from "@/shared/config/tokens"
+import { EyeClosedIcon } from "@/shared/icons/EyeClosed"
+import { EyeOpenedIcon } from "@/shared/icons/EyeOpened"
 
 interface IInputProps extends TextInputProps {
   type?: "password"

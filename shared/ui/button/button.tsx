@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from "react-native"
 
-import { COLORS, RADIUSES } from "../../config/tokens"
+import { COLORS, RADIUSES } from "@/shared/config/tokens"
 
 interface IButtonProps extends PressableProps {
   variant?: "default" | "primary" | "link"
@@ -23,7 +23,7 @@ export const Button = ({
 }: IButtonProps) => {
   const [isPressing, setIsPressing] = useState(false)
 
-  const animatedValue = new Animated.Value(100)
+  const animatedValue = useMemo(() => new Animated.Value(100), [])
   const color = animatedValue.interpolate({
     inputRange: [0, 100],
     outputRange: [COLORS.primaryHover, COLORS.primary],
@@ -69,7 +69,7 @@ export const Button = ({
     <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} {...props}>
       <Animated.View style={customStyles}>
         {typeof children === "function"
-          ? children({ pressed: isPressing })
+          ? children({ pressed: isPressing, hovered: isPressing })
           : children}
       </Animated.View>
     </Pressable>

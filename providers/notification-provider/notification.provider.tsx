@@ -7,7 +7,7 @@ import {
 } from "react"
 import { Animated, StyleSheet, Text, View } from "react-native"
 
-import { RADIUSES, COLORS } from "../../../shared/config/tokens"
+import { COLORS, RADIUSES } from "@/shared/config/tokens"
 
 import {
   ToastConfig,
@@ -42,7 +42,7 @@ const ToastItem = ({ toast, onRemove }: ToastItemProps) => {
     }, 2700)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, [animatedValue, onRemove, toast.id])
 
   const translateY = animatedValue.interpolate({
     inputRange: [0, 1],

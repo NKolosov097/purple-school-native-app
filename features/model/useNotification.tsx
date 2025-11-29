@@ -1,6 +1,6 @@
 import { useContext } from "react"
 
-import { ToastContext } from "@app/providers/notification-provider/notification.provider"
+import { ToastContext } from "@/providers/notification-provider/notification.provider"
 
 export const useNotification = () => {
   const context = useContext(ToastContext)
