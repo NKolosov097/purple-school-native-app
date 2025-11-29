@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useState } from "react"
 import {
+  Animated,
   GestureResponderEvent,
   Pressable,
   PressableProps,
   StyleSheet,
 } from "react-native"
 
-import { COLORS, RADIUSES } from "../tokens"
+import { COLORS, RADIUSES } from "../../config/tokens"
 
 interface IButtonProps extends PressableProps {
   variant?: "default" | "primary" | "link"
@@ -22,42 +23,55 @@ export const Button = ({
 }: IButtonProps) => {
   const [isPressing, setIsPressing] = useState(false)
 
+  const animatedValue = new Animated.Value(100)
+  const color = animatedValue.interpolate({
+    inputRange: [0, 100],
+    outputRange: [COLORS.primaryHover, COLORS.primary],
+  })
+
   const customStyles = useMemo(
     () => ({
       ...styles.btn,
       ...styles?.[variant],
-      ...(isPressing ? styles.pressing : {}),
       ...Object.values(style ?? {}),
+      ...(variant === "primary" && { backgroundColor: color }),
     }),
-    [variant, isPressing, style]
+    [variant, style, color]
   )
 
   const handlePressIn = useCallback(
     (event: GestureResponderEvent): void => {
       setIsPressing(true)
+      Animated.timing(animatedValue, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: false,
+      }).start()
       onPressIn?.(event)
     },
-    [onPressIn]
+    [onPressIn, animatedValue]
   )
 
   const handlePressOut = useCallback(
     (event: GestureResponderEvent): void => {
       setIsPressing(false)
+      Animated.timing(animatedValue, {
+        toValue: 100,
+        duration: 100,
+        useNativeDriver: false,
+      }).start()
       onPressOut?.(event)
     },
-    [onPressOut]
+    [onPressOut, animatedValue]
   )
 
   return (
-    <Pressable
-      style={customStyles}
-      onPressIn={handlePressIn}
-      onPressOut={handlePressOut}
-      {...props}
-    >
-      {typeof children === "function"
-        ? children({ pressed: isPressing })
-        : children}
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} {...props}>
+      <Animated.View style={customStyles}>
+        {typeof children === "function"
+          ? children({ pressed: isPressing })
+          : children}
+      </Animated.View>
     </Pressable>
   )
 }
@@ -72,5 +86,4 @@ const styles = StyleSheet.create({
   default: { backgroundColor: COLORS.violetDark },
   primary: { backgroundColor: COLORS.primary },
   link: { backgroundColor: "transparent" },
-  pressing: { backgroundColor: COLORS.primaryHover },
 })

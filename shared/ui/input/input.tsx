@@ -8,10 +8,10 @@ import {
   Text,
 } from "react-native"
 
-import { RADIUSES, COLORS } from "../tokens"
+import { RADIUSES, COLORS, FONTS } from "../../config/tokens"
 
-import { EyeClosedIcon } from "../Icons/EyeClosed"
-import { EyeOpenedIcon } from "../Icons/EyeOpened"
+import { EyeClosedIcon } from "../../icons/EyeClosed"
+import { EyeOpenedIcon } from "../../icons/EyeOpened"
 
 interface IInputProps extends TextInputProps {
   type?: "password"
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
     fontFamily: "FiraSans, FiraSans-Regular",
     fontWeight: 400,
-    fontSize: 18,
+    fontSize: FONTS.f18,
     lineHeight: 1.2,
     color: COLORS.gray,
   },

@@ -1,13 +1,16 @@
 export const COLORS = {
   black: "#16171D",
   violetDark: "#2E2D3D",
-  white: "#FFFFFF",
+  white: "#FAFAFA",
 
   primary: "#6C38CC",
   primaryHover: "#452481",
   link: "#A97BFF",
 
   gray: "#AFB2BF",
+
+  success: "#10B981",
+  error: "#CC384E",
 } as const
 
 export const GAPS = {
@@ -18,4 +21,9 @@ export const GAPS = {
 
 export const RADIUSES = {
   r10: 10,
+} as const
+
+export const FONTS = {
+  f16: 16,
+  f18: 18,
 } as const
