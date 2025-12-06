@@ -5,9 +5,10 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "Purple-School-App",
+    "scheme": "purple-school-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "backgroundColor": "#16171D",
     "ios": {
       "supportsTablet": true
     },
@@ -42,119 +43,10 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/FiraSans-Regular.ttf"],
-          "android": {
-            "fonts": [
-              {
-                "fontFamily": "FiraSans",
-                "fontDefinitions": [
-                  {
-                    "path": "./assets/fonts/FiraSans-Thin.ttf",
-                    "weight": 100
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-ThinItalic.ttf",
-                    "weight": 100,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-ExtraLight.ttf",
-                    "weight": 200
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-ExtraLightItalic.ttf",
-                    "weight": 200,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Light.ttf",
-                    "weight": 300
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-LightItalic.ttf",
-                    "weight": 300,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Regular.ttf",
-                    "weight": 400
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Italic.ttf",
-                    "weight": 400,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Medium.ttf",
-                    "weight": 500
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-MediumItalic.ttf",
-                    "weight": 500,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-SemiBold.ttf",
-                    "weight": 600
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-SemiBoldItalic.ttf",
-                    "weight": 600,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Bold.ttf",
-                    "weight": 700
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-BoldItalic.ttf",
-                    "weight": 700,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-ExtraBold.ttf",
-                    "weight": 800
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-ExtraBoldItalic.ttf",
-                    "weight": 800,
-                    "style": "italic"
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-Black.ttf",
-                    "weight": 900
-                  },
-                  {
-                    "path": "./assets/fonts/FiraSans-BlackItalic.ttf",
-                    "weight": 900,
-                    "style": "italic"
-                  }
-                ]
-              }
-            ]
-          },
-          "ios": {
-            "fonts": [
-              "./assets/fonts/FiraSans-Thin.ttf",
-              "./assets/fonts/FiraSans-ThinItalic.ttf",
-              "./assets/fonts/FiraSans-ExtraLight.ttf",
-              "./assets/fonts/FiraSans-ExtraLightItalic.ttf",
-              "./assets/fonts/FiraSans-Light.ttf",
-              "./assets/fonts/FiraSans-LightItalic.ttf",
-              "./assets/fonts/FiraSans-Regular.ttf",
-              "./assets/fonts/FiraSans-Italic.ttf",
-              "./assets/fonts/FiraSans-Medium.ttf",
-              "./assets/fonts/FiraSans-MediumItalic.ttf",
-              "./assets/fonts/FiraSans-SemiBold.ttf",
-              "./assets/fonts/FiraSans-SemiBoldItalic.ttf",
-              "./assets/fonts/FiraSans-Bold.ttf",
-              "./assets/fonts/FiraSans-BoldItalic.ttf",
-              "./assets/fonts/FiraSans-ExtraBold.ttf",
-              "./assets/fonts/FiraSans-ExtraBoldItalic.ttf",
-              "./assets/fonts/FiraSans-Black.ttf",
-              "./assets/fonts/FiraSans-BlackItalic.ttf"
-            ]
-          }
+          "fonts": [
+            "./assets/fonts/FiraSans-Regular.ttf",
+            "./assets/fonts/FiraSans-SemiBold.ttf"
+          ]
         }
       ]
     ],
