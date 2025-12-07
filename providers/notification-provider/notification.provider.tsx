@@ -147,5 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     fontWeight: "500",
+    fontFamily: "FiraSans, FiraSans-Regular",
   },
 })
