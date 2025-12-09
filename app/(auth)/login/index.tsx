@@ -6,6 +6,7 @@ import { Button } from "@shared/ui/button/button"
 import { Input } from "@shared/ui/input/input"
 
 import { useNotification } from "@features/model/useNotification"
+import { router } from "expo-router"
 
 interface IForm {
   email: string
@@ -23,7 +24,8 @@ const Login = () => {
   const { error } = useNotification()
 
   const alert = () => {
-    error("Неверный логин или пароль")
+    // error("Неверный логин или пароль")
+    router.navigate("/+not-found")
   }
 
   return (
