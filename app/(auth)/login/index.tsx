@@ -5,8 +5,7 @@ import { COLORS, FONTS, GAPS } from "@shared/config/tokens"
 import { Button } from "@shared/ui/button/button"
 import { Input } from "@shared/ui/input/input"
 
-import { useNotification } from "@features/model/useNotification"
-import { router } from "expo-router"
+import { Link } from "@/shared/ui/Link/Link"
 
 interface IForm {
   email: string
@@ -20,13 +19,6 @@ const initialForm: IForm = {
 
 const Login = () => {
   const [form, setForm] = useState<IForm>(initialForm)
-
-  const { error } = useNotification()
-
-  const alert = () => {
-    // error("Неверный логин или пароль")
-    router.navigate("/+not-found")
-  }
 
   return (
     <View style={styles.content}>
@@ -56,9 +48,7 @@ const Login = () => {
         </Button>
       </View>
 
-      <Button variant="link" onPress={alert}>
-        <Text style={styles.recoveryText}>Восстановить пароль</Text>
-      </Button>
+      <Link href="/courses/typescript">Восстановить пароль</Link>
     </View>
   )
 }
@@ -85,11 +75,5 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: FONTS.f18,
     color: COLORS.white,
-  },
-  recoveryText: {
-    fontFamily: "FiraSans, FiraSans-Regular",
-    fontWeight: 400,
-    fontSize: FONTS.f18,
-    color: COLORS.link,
   },
 })

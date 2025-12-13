@@ -1,7 +1,7 @@
-import { Link } from "expo-router"
 import { Image, StyleSheet, Text, View } from "react-native"
 
 import { COLORS, FONTS } from "@/shared/config/tokens"
+import { Link } from "@/shared/ui/Link/Link"
 
 const NotFoundScreen = () => {
   return (
@@ -22,9 +22,7 @@ const NotFoundScreen = () => {
         </Text>
       </View>
 
-      <Link href="/login" style={styles.button}>
-        На главный экран
-      </Link>
+      <Link href="/login">На главный экран</Link>
     </View>
   )
 }
@@ -47,13 +45,6 @@ const styles = StyleSheet.create({
     fontSize: FONTS.f18,
     textAlign: "center",
     color: COLORS.white,
-  },
-  button: {
-    fontFamily: "FiraSans, FiraSans-Regular",
-    fontWeight: 400,
-    fontSize: FONTS.f18,
-    textAlign: "center",
-    color: COLORS.link,
   },
 })
 
