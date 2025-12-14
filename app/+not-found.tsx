@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native"
 
 import { COLORS, FONTS } from "@/shared/config/tokens"
-import { Link } from "@/shared/ui/Link/Link"
+import { Link } from "@/shared/ui/link/link"
 
 const NotFoundScreen = () => {
   return (
