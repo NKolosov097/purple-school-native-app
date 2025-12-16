@@ -1,24 +1,58 @@
-import { useState } from "react"
+import { useAtom } from "jotai"
+import { Controller, useForm } from "react-hook-form"
 import { Image, StyleSheet, Text, View } from "react-native"
 
+import { useRouter } from "expo-router"
+
+import { parse, ValiError } from "valibot"
+
+import { useNotification } from "@/features/model/useNotification"
+
+import { LoginFormData, loginSchema } from "@/entities/auth/model/auth.model"
+import { loginAtom } from "@/entities/auth/model/auth.state"
+
+import { Link } from "@/shared/ui/link/link"
 import { COLORS, FONTS, GAPS } from "@shared/config/tokens"
 import { Button } from "@shared/ui/button/button"
 import { Input } from "@shared/ui/input/input"
 
-import { Link } from "@/shared/ui/Link/Link"
-
-interface IForm {
-  email: string
-  password: string
-}
-
-const initialForm: IForm = {
-  email: "",
-  password: "",
-}
-
 const Login = () => {
-  const [form, setForm] = useState<IForm>(initialForm)
+  const { replace } = useRouter()
+  const [auth, login] = useAtom(loginAtom)
+  const { error } = useNotification()
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onBlur",
+  })
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const authData = await login({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (authData) {
+        replace("/courses")
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        error(e?.message ?? auth?.error ?? "Произошла неизвестная ошибка")
+      } else if (typeof e === "string") {
+        error(e ?? auth?.error ?? "Произошла неизвестная ошибка")
+      } else {
+        error(auth?.error ?? "Произошла неизвестная ошибка")
+      }
+    }
+  }
 
   return (
     <View style={styles.content}>
@@ -30,25 +64,78 @@ const Login = () => {
       />
 
       <View style={styles.form}>
-        <Input
-          value={form.email}
-          onChangeText={(email) => setForm((prev) => ({ ...prev, email }))}
-          placeholder="Email"
-        />
-        <Input
-          value={form.password}
-          onChangeText={(password) =>
-            setForm((prev) => ({ ...prev, password }))
-          }
-          placeholder="Пароль"
-          type="password"
-        />
-        <Button variant="primary">
+        <View>
+          <Controller
+            name="email"
+            control={control}
+            rules={{
+              validate: (value) => {
+                try {
+                  parse(loginSchema.entries.email, value)
+                  return true
+                } catch (validationError) {
+                  if (validationError instanceof ValiError) {
+                    return validationError.issues[0].message
+                  }
+                  return "Неизвестная ошибка валидации"
+                }
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Email"
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
+            )}
+          />
+          {errors.email && (
+            <Text style={styles.errorText}>{errors.email.message}</Text>
+          )}
+        </View>
+
+        <View>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              validate: (value) => {
+                try {
+                  parse(loginSchema.entries.password, value)
+                  return true
+                } catch (validationError) {
+                  if (validationError instanceof ValiError) {
+                    return validationError.issues[0].message
+                  }
+                  return "Неизвестная ошибка валидации"
+                }
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Пароль"
+                type="password"
+                secureTextEntry
+              />
+            )}
+          />
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password.message}</Text>
+          )}
+        </View>
+
+        <Button variant="primary" onPress={handleSubmit(onSubmit)}>
           <Text style={styles.submitText}>Войти</Text>
         </Button>
       </View>
 
-      <Link href="/courses/typescript">Восстановить пароль</Link>
+      <Link href="/(auth)/recovery-password">Восстановить пароль</Link>
     </View>
   )
 }
@@ -68,6 +155,12 @@ const styles = StyleSheet.create({
   },
   form: {
     gap: GAPS.g16,
+  },
+  errorText: {
+    fontFamily: "FiraSans, FiraSans-Regular",
+    fontWeight: 400,
+    fontSize: FONTS.f16,
+    color: COLORS.error,
   },
   submitText: {
     textAlign: "center",
