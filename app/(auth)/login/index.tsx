@@ -18,8 +18,8 @@ import { Input } from "@shared/ui/input/input"
 
 const Login = () => {
   const { replace } = useRouter()
-  const [auth, login] = useAtom(loginAtom)
-  const { error } = useNotification()
+  const [{ isLoading, error }, login] = useAtom(loginAtom)
+  const { error: errorToast } = useNotification()
 
   const {
     control,
@@ -45,11 +45,11 @@ const Login = () => {
       }
     } catch (e) {
       if (e instanceof Error) {
-        error(e?.message ?? auth?.error ?? "Произошла неизвестная ошибка")
+        errorToast(e?.message ?? error ?? "Произошла неизвестная ошибка")
       } else if (typeof e === "string") {
-        error(e ?? auth?.error ?? "Произошла неизвестная ошибка")
+        errorToast(e ?? error ?? "Произошла неизвестная ошибка")
       } else {
-        error(auth?.error ?? "Произошла неизвестная ошибка")
+        errorToast(error ?? "Произошла неизвестная ошибка")
       }
     }
   }
@@ -130,7 +130,11 @@ const Login = () => {
           )}
         </View>
 
-        <Button variant="primary" onPress={handleSubmit(onSubmit)}>
+        <Button
+          variant="primary"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+        >
           <Text style={styles.submitText}>Войти</Text>
         </Button>
       </View>

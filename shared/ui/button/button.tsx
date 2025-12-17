@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react"
 import {
+  ActivityIndicator,
   Animated,
   GestureResponderEvent,
   Pressable,
@@ -11,6 +12,7 @@ import { COLORS, RADIUSES } from "@shared/config/tokens"
 
 interface IButtonProps extends PressableProps {
   variant?: "default" | "primary" | "link"
+  isLoading?: boolean
 }
 
 export const Button = ({
@@ -19,6 +21,7 @@ export const Button = ({
   onPressIn,
   onPressOut,
   children,
+  isLoading,
   ...props
 }: IButtonProps) => {
   const [isPressing, setIsPressing] = useState(false)
@@ -68,9 +71,13 @@ export const Button = ({
   return (
     <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} {...props}>
       <Animated.View style={customStyles}>
-        {typeof children === "function"
-          ? children({ pressed: isPressing, hovered: isPressing })
-          : children}
+        {isLoading ? (
+          <ActivityIndicator size="small" color={COLORS.white} />
+        ) : typeof children === "function" ? (
+          children({ pressed: isPressing, hovered: isPressing })
+        ) : (
+          children
+        )}
       </Animated.View>
     </Pressable>
   )
