@@ -1,67 +1,32 @@
-import { useEffect, useMemo } from "react"
-import { StatusBar } from "react-native"
-import { useSafeAreaInsets } from "react-native-safe-area-context"
-
-import Constants from "expo-constants"
-import { useFonts } from "expo-font"
-import { SplashScreen, Stack } from "expo-router"
+import { useEffect } from "react"
 import "react-native-reanimated"
+
+import { useAtomValue, useSetAtom } from "jotai"
 
 import { Providers } from "@/providers"
 
-import { StackProps } from "@/shared/types/global.types"
-import { COLORS } from "@shared/config/tokens"
+import { useFonts } from "@/hooks/useFonts"
+import { useScreenOptions } from "@/hooks/useScreenOptions"
 
-SplashScreen.preventAutoHideAsync()
+import { authLoadedAtom, initAuthAtom } from "@/entities/auth/model/auth.state"
+
+import { StatusBar } from "@/shared/ui/status-bar/status-bar"
 
 export default function RootLayout() {
-  const {
-    top: paddingTop,
-    right: paddingRight,
-    bottom: paddingBottom,
-    left: paddingLeft,
-  } = useSafeAreaInsets()
-
-  const screenOptions = useMemo(
-    (): StackProps["screenOptions"] => ({
-      headerShown: false,
-      contentStyle: {
-        backgroundColor: COLORS.black,
-        paddingTop,
-        paddingBottom,
-        paddingLeft,
-        paddingRight,
-      },
-    }),
-    [paddingTop, paddingBottom, paddingLeft, paddingRight]
-  )
-
-  const [fontsLoaded, fontsError] = useFonts({
-    FiraSans: require("../assets/fonts/FiraSans-Regular.ttf"),
-    "FiraSans-SemiBold": require("../assets/fonts/FiraSans-SemiBold.ttf"),
-  })
+  const authLoaded = useAtomValue(authLoadedAtom)
+  const initAuth = useSetAtom(initAuthAtom)
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [fontsLoaded])
+    initAuth()
+  }, [initAuth])
 
-  useEffect(() => {
-    if (fontsError && Constants.debugMode) {
-      throw fontsError
-    }
-  }, [fontsError])
+  useFonts(authLoaded)
+  const Stack = useScreenOptions()
 
   return (
     <Providers>
-      <Stack screenOptions={screenOptions} />
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={COLORS.black}
-        networkActivityIndicatorVisible
-        hidden
-      />
+      {Stack}
+      <StatusBar />
     </Providers>
   )
 }
