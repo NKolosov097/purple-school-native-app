@@ -40,6 +40,10 @@ const Login = () => {
         password: data.password,
       })
 
+      if (error) {
+        errorToast("Неверный логин или пароль")
+      }
+
       if (authData) {
         replace("/courses")
       }
@@ -121,7 +125,6 @@ const Login = () => {
                 onBlur={onBlur}
                 placeholder="Пароль"
                 type="password"
-                secureTextEntry
               />
             )}
           />

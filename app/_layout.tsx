@@ -1,5 +1,7 @@
-import { useEffect } from "react"
+import "react-native-gesture-handler"
 import "react-native-reanimated"
+
+import { useEffect } from "react"
 
 import { useAtomValue, useSetAtom } from "jotai"
 
@@ -8,6 +10,7 @@ import { Providers } from "@/providers"
 import { useFonts } from "@/hooks/useFonts"
 import { useScreenOptions } from "@/hooks/useScreenOptions"
 
+import { setupAuthHttp } from "@/entities/auth/api/authHttp"
 import { authLoadedAtom, initAuthAtom } from "@/entities/auth/model/auth.state"
 
 import { StatusBar } from "@/shared/ui/status-bar/status-bar"
@@ -17,6 +20,7 @@ export default function RootLayout() {
   const initAuth = useSetAtom(initAuthAtom)
 
   useEffect(() => {
+    setupAuthHttp()
     initAuth()
   }, [initAuth])
 

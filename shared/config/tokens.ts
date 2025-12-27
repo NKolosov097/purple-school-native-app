@@ -1,6 +1,7 @@
 export const COLORS = {
   black: "#16171D",
   violetDark: "#2E2D3D",
+  grayDark: "#1E1F29",
   white: "#FAFAFA",
 
   primary: "#6C38CC",
@@ -11,9 +12,12 @@ export const COLORS = {
 
   success: "#10B981",
   error: "#CC384E",
+
+  transparent: "transparent",
 } as const
 
 export const GAPS = {
+  g8: 8,
   g16: 16,
   g26: 26,
   g50: 50,

@@ -35,14 +35,14 @@ export const Input = ({
         {...props}
       />
 
-      {type === "password" && (
+      {type === "password" ? (
         <Pressable
           style={styles.eyeIcon}
           onPress={() => setIsPasswordVisible((prev) => !prev)}
         >
           {isPasswordVisible ? <EyeOpenedIcon /> : <EyeClosedIcon />}
         </Pressable>
-      )}
+      ) : null}
     </View>
   )
 }
