@@ -20,12 +20,12 @@ import {
 import { Redirect } from "expo-router"
 import { Drawer } from "expo-router/drawer"
 
-import { useAtom, useAtomValue } from "jotai"
+import { useAtomValue, useSetAtom } from "jotai"
 
 import {
   authAtom,
   authLoadedAtom,
-  AuthState,
+  logoutAtom,
 } from "@/entities/auth/model/auth.state"
 
 import { COLORS, GAPS } from "@/shared/config/tokens"
@@ -47,63 +47,77 @@ const screenOptions:
       navigation: DrawerNavigationProp<ParamListBase, string, undefined>
       theme: ReactNavigation.Theme
     }) => DrawerNavigationOptions)
-  | undefined = ({ navigation }) => ({
-  headerShown: true,
-  headerTitleAlign: "center",
-  headerStatusBarHeight: Platform.select({ android: 0, ios: undefined }),
-  headerTitle: ({ children }) => (
-    <Text style={styles.headerTitle}>{children}</Text>
-  ),
-  headerLeft: () => (
-    <TouchableOpacity
-      accessibilityRole="button"
-      accessibilityLabel="Открыть меню"
-      onPress={() => navigation.toggleDrawer()}
-      hitSlop={{ top: 12, right: 12, bottom: 12, left: 12 }}
-      style={{ paddingHorizontal: 12 }}
-    >
-      <Image
-        alt="Меню"
-        source={require("@/assets/images/drawer/menu.png")}
-        resizeMode="contain"
-        width={24}
-        height={24}
-        style={styles.image}
-      />
-    </TouchableOpacity>
-  ),
-  headerStyle: {
-    backgroundColor: COLORS.grayDark,
-    height: 52,
-  },
-  sceneContainerStyle: {
-    borderRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  drawerStyle: {
-    backgroundColor: COLORS.black,
-    width: "100%",
-    borderRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  drawerItemStyle: {
-    borderRadius: 0,
-    marginHorizontal: 0,
-  },
-  drawerActiveTintColor: COLORS.white,
-  drawerInactiveTintColor: COLORS.gray,
-  drawerActiveBackgroundColor: COLORS.grayDark,
-})
+  | undefined = ({ navigation: { getState, toggleDrawer }, route }) => {
+  const state = getState()
+  const activeRouteName = state.routes[state.index]?.name
+
+  const isFocused = activeRouteName === route.name
+
+  return {
+    headerShown: true,
+    headerTitleAlign: "center",
+    headerStatusBarHeight: Platform.select({ android: 0, ios: undefined }),
+    headerTitle: ({ children }) => (
+      <Text style={styles.headerTitle}>{children}</Text>
+    ),
+    headerLeft: () => (
+      <TouchableOpacity
+        accessibilityRole="button"
+        accessibilityLabel="Открыть меню"
+        onPress={toggleDrawer}
+        hitSlop={{ top: 12, right: 12, bottom: 12, left: 12 }}
+        style={{ paddingHorizontal: 12 }}
+      >
+        <Image
+          alt="Меню"
+          source={require("@/assets/images/drawer/menu.png")}
+          resizeMode="contain"
+          width={24}
+          height={24}
+          style={styles.image}
+        />
+      </TouchableOpacity>
+    ),
+    headerStyle: {
+      backgroundColor: COLORS.grayDark,
+      height: 52,
+    },
+    sceneContainerStyle: {
+      borderRadius: 0,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+    drawerStyle: {
+      backgroundColor: COLORS.black,
+      width: "100%",
+      borderRadius: 0,
+      borderTopLeftRadius: 0,
+      borderTopRightRadius: 0,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+    drawerItemStyle: {
+      borderRadius: 0,
+      marginHorizontal: 0,
+      ...(isFocused
+        ? {
+            borderRightColor: COLORS.primary,
+            borderRightWidth: 5,
+            borderStyle: "solid",
+          }
+        : { borderRightWidth: 0 }),
+    },
+    drawerActiveTintColor: COLORS.white,
+    drawerInactiveTintColor: COLORS.gray,
+    drawerActiveBackgroundColor: COLORS.grayDark,
+  }
+}
 
 const drawerContent = (
   props: DrawerContentComponentProps,
-  setAuth: (auth: AuthState) => void
+  logout: () => void
 ) => (
   <DrawerContentScrollView
     {...props}
@@ -138,12 +152,7 @@ const drawerContent = (
     <DrawerItemList {...props} />
 
     <View style={styles.footer}>
-      <Link
-        href="/login"
-        onPress={() =>
-          setAuth({ accessToken: null, isLoading: false, error: null })
-        }
-      >
+      <Link href="/login" onPress={logout}>
         Выйти
       </Link>
 
@@ -181,8 +190,9 @@ const drawerScreens: IDrawerScreen[] = [
 ]
 
 export default function ProtectedLayout() {
-  const [{ accessToken }, setAuth] = useAtom(authAtom)
+  const { accessToken } = useAtomValue(authAtom)
   const authLoaded = useAtomValue(authLoadedAtom)
+  const logout = useSetAtom(logoutAtom)
 
   if (!authLoaded) return null
 
@@ -194,7 +204,7 @@ export default function ProtectedLayout() {
     <Drawer
       backBehavior="history"
       screenOptions={screenOptions}
-      drawerContent={(props) => drawerContent(props, setAuth)}
+      drawerContent={(props) => drawerContent(props, logout)}
     >
       {drawerScreens.map((screen) => (
         <Drawer.Screen
