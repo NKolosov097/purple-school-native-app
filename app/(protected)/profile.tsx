@@ -12,7 +12,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   text: {
-    color: COLORS.white,
+    color: COLORS.black,
   },
 })
 
