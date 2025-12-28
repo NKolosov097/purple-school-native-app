@@ -6,9 +6,9 @@ import {
   DrawerNavigationProp,
 } from "@react-navigation/drawer"
 import { ParamListBase, RouteProp } from "@react-navigation/native"
+import { ComponentType } from "react"
 import {
   Image,
-  ImageURISource,
   Platform,
   Pressable,
   StyleSheet,
@@ -16,11 +16,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native"
+import { SvgProps } from "react-native-svg"
 
 import { Redirect } from "expo-router"
 import { Drawer } from "expo-router/drawer"
 
 import { useAtomValue, useSetAtom } from "jotai"
+
+import { CloseIcon } from "@/assets/icons/drawer/close"
+import { ClubIcon } from "@/assets/icons/drawer/club"
+import { CoursesIcon } from "@/assets/icons/drawer/courses"
+import { MenuIcon } from "@/assets/icons/drawer/menu"
+import { ProfileIcon } from "@/assets/icons/drawer/profile"
 
 import {
   authAtom,
@@ -28,7 +35,7 @@ import {
   logoutAtom,
 } from "@/entities/auth/model/auth.state"
 
-import { COLORS, GAPS } from "@/shared/config/tokens"
+import { COLORS, FONTS, GAPS } from "@/shared/config/tokens"
 import { Link } from "@/shared/ui/link/link"
 
 const AVATAR_SIZE = 100
@@ -37,7 +44,7 @@ interface IDrawerScreen {
   name: string
   title: string
   label: string
-  imgSource: ImageURISource
+  Icon: ComponentType<SvgProps>
 }
 
 const screenOptions:
@@ -57,10 +64,13 @@ const screenOptions:
     headerShown: true,
     headerTitleAlign: "center",
     headerStatusBarHeight: Platform.select({ android: 0, ios: undefined }),
-    headerTitle: ({ children }) => (
-      <Text style={styles.headerTitle}>{children}</Text>
-    ),
-    headerLeft: () => (
+    headerTitleStyle: {
+      color: COLORS.white,
+      fontFamily: "FiraSans",
+      fontWeight: 400,
+      fontSize: FONTS.f20,
+    },
+    headerLeft: ({}) => (
       <TouchableOpacity
         accessibilityRole="button"
         accessibilityLabel="Открыть меню"
@@ -68,21 +78,16 @@ const screenOptions:
         hitSlop={{ top: 12, right: 12, bottom: 12, left: 12 }}
         style={{ paddingHorizontal: 12 }}
       >
-        <Image
-          alt="Меню"
-          source={require("@/assets/images/drawer/menu.png")}
-          resizeMode="contain"
-          width={24}
-          height={24}
-          style={styles.image}
-        />
+        <MenuIcon width={24} height={24} style={styles.image} />
       </TouchableOpacity>
     ),
     headerStyle: {
       backgroundColor: COLORS.grayDark,
+      shadowColor: COLORS.grayDark,
+      shadowOpacity: 0,
       height: 52,
     },
-    sceneContainerStyle: {
+    sceneStyle: {
       borderRadius: 0,
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,
@@ -101,6 +106,10 @@ const screenOptions:
     drawerItemStyle: {
       borderRadius: 0,
       marginHorizontal: 0,
+      fontFamily: "FiraSans",
+      fontWeight: 400,
+      fontSize: FONTS.f16,
+      color: COLORS.white,
       ...(isFocused
         ? {
             borderRightColor: COLORS.primary,
@@ -127,14 +136,7 @@ const drawerContent = (
       onPress={() => props.navigation.closeDrawer()}
       style={styles.closeButton}
     >
-      <Image
-        alt="Закрыть"
-        source={require("@/assets/images/drawer/close.png")}
-        resizeMode="contain"
-        width={24}
-        height={24}
-        style={styles.closeImage}
-      />
+      <CloseIcon width={24} height={24} style={styles.closeImage} />
     </Pressable>
 
     <View style={styles.avatarContainer}>
@@ -173,19 +175,19 @@ const drawerScreens: IDrawerScreen[] = [
     name: "profile",
     title: "Профиль",
     label: "Профиль",
-    imgSource: require("@/assets/images/drawer/profile.png"),
+    Icon: ProfileIcon,
   },
   {
     name: "courses/index",
     title: "Мои курсы",
     label: "Курсы",
-    imgSource: require("@/assets/images/drawer/courses.png"),
+    Icon: CoursesIcon,
   },
   {
     name: "club",
     title: "Клуб",
     label: "Клуб",
-    imgSource: require("@/assets/images/drawer/club.png"),
+    Icon: ClubIcon,
   },
 ]
 
@@ -206,18 +208,16 @@ export default function ProtectedLayout() {
       screenOptions={screenOptions}
       drawerContent={(props) => drawerContent(props, logout)}
     >
-      {drawerScreens.map((screen) => (
+      {drawerScreens.map(({ title, label, name, Icon }) => (
         <Drawer.Screen
-          key={screen.name}
-          name={screen.name}
+          key={name}
+          name={name}
           options={{
-            title: screen.title,
-            drawerLabel: screen.label,
-            drawerIcon: () => (
-              <Image
-                alt={screen.title}
-                source={screen.imgSource}
-                resizeMode="contain"
+            title,
+            drawerLabel: label,
+            drawerIcon: ({ focused }) => (
+              <Icon
+                color={focused ? COLORS.primary : COLORS.gray}
                 width={24}
                 height={24}
                 style={styles.image}
@@ -242,12 +242,6 @@ const styles = StyleSheet.create({
   image: {
     width: 24,
     height: 24,
-  },
-  headerTitle: {
-    fontFamily: "FiraSans",
-    fontWeight: 400,
-    fontSize: 16,
-    color: COLORS.white,
   },
   drawerContentContainer: {
     position: "relative",

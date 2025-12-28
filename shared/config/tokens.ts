@@ -30,4 +30,5 @@ export const RADIUSES = {
 export const FONTS = {
   f16: 16,
   f18: 18,
+  f20: 20,
 } as const
