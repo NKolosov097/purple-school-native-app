@@ -274,6 +274,9 @@ const styles = StyleSheet.create({
     height: AVATAR_SIZE,
     alignSelf: "center",
     borderRadius: AVATAR_SIZE / 2,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: COLORS.gray,
   },
   footer: {
     marginTop: "auto",
