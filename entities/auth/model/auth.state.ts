@@ -3,10 +3,10 @@ import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store"
 import { atom } from "jotai"
 import { atomWithStorage, createJSONStorage } from "jotai/utils"
 
-import { publicHttp } from "@/shared/api/http"
+import { API } from "@/entities/auth/api/api"
+import { AuthResponse, LoginRequest } from "@/entities/auth/model/auth.model"
 
-import { API } from "../api/api"
-import { AuthResponse, LoginRequest } from "./auth.model"
+import { http } from "@/shared/api/http"
 
 export interface AuthState {
   accessToken: string | null
@@ -57,10 +57,8 @@ export const loginAtom = atom(
     })
 
     try {
-      const { data } = await publicHttp.post<AuthResponse>(
-        API.login,
-        loginRequest
-      )
+      const { data } = await http.post<AuthResponse>(API.login, loginRequest)
+
       set(authAtom, {
         ...get(authAtom),
         accessToken: data.accessToken,
