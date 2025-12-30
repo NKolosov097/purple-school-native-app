@@ -6,7 +6,7 @@ import { useRouter } from "expo-router"
 
 import { parse, ValiError } from "valibot"
 
-import { useNotification } from "@/features/model/useNotification"
+import { useNotification } from "@/features/notification/model/useNotification"
 
 import { LoginFormData, loginSchema } from "@/entities/auth/model/auth.model"
 import { loginAtom } from "@/entities/auth/model/auth.state"

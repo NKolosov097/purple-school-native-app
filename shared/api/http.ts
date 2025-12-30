@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios"
 
-import { API } from "@/entities/auth/api/api"
+import { AUTH_API } from "@/entities/auth/api/api"
 import {
   AuthResponse,
   getAccessToken,
@@ -41,7 +41,7 @@ http.interceptors.response.use(
 
     // Never try to refresh if refresh itself failed.
     if (
-      originalUrl === API.refreshToken ||
+      originalUrl === AUTH_API.refreshToken ||
       originalUrl.endsWith("/auth/refresh-token")
     ) {
       logout()
@@ -63,7 +63,7 @@ http.interceptors.response.use(
     try {
       if (!refreshPromise) {
         refreshPromise = publicHttp
-          .post<AuthResponse>(API.refreshToken)
+          .post<AuthResponse>(AUTH_API.refreshToken)
           .then((r) => r.data.accessToken)
           .finally(() => {
             refreshPromise = null

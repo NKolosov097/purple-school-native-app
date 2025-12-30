@@ -1,44 +1,26 @@
 import {
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-  DrawerItemList,
   DrawerNavigationOptions,
   DrawerNavigationProp,
 } from "@react-navigation/drawer"
 import { ParamListBase, RouteProp } from "@react-navigation/native"
 import { ComponentType } from "react"
-import {
-  Image,
-  Platform,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { Platform, StyleSheet, TouchableOpacity } from "react-native"
 import { SvgProps } from "react-native-svg"
 
 import { Redirect } from "expo-router"
 import { Drawer } from "expo-router/drawer"
 
-import { useAtomValue, useSetAtom } from "jotai"
+import { useAtomValue } from "jotai"
 
-import { CloseIcon } from "@/assets/icons/drawer/close"
 import { ClubIcon } from "@/assets/icons/drawer/club"
 import { CoursesIcon } from "@/assets/icons/drawer/courses"
 import { MenuIcon } from "@/assets/icons/drawer/menu"
 import { ProfileIcon } from "@/assets/icons/drawer/profile"
 
-import {
-  authAtom,
-  authLoadedAtom,
-  logoutAtom,
-} from "@/entities/auth/model/auth.state"
+import { authAtom, authLoadedAtom } from "@/entities/auth/model/auth.state"
 
-import { COLORS, FONTS, GAPS } from "@/shared/config/tokens"
-import { Link } from "@/shared/ui/link/link"
-
-const AVATAR_SIZE = 100
+import { COLORS, FONTS } from "@/shared/config/tokens"
+import { DrawerContent } from "@/widgets/layout/ui/DrawerContent"
 
 interface IDrawerScreen {
   name: string
@@ -70,7 +52,7 @@ const screenOptions:
       fontWeight: 400,
       fontSize: FONTS.f20,
     },
-    headerLeft: ({}) => (
+    headerLeft: () => (
       <TouchableOpacity
         accessibilityRole="button"
         accessibilityLabel="Открыть меню"
@@ -124,52 +106,6 @@ const screenOptions:
   }
 }
 
-const drawerContent = (
-  props: DrawerContentComponentProps,
-  logout: () => void
-) => (
-  <DrawerContentScrollView
-    {...props}
-    contentContainerStyle={styles.drawerContentContainer}
-  >
-    <Pressable
-      onPress={() => props.navigation.closeDrawer()}
-      style={styles.closeButton}
-    >
-      <CloseIcon width={24} height={24} style={styles.closeImage} />
-    </Pressable>
-
-    <View style={styles.avatarContainer}>
-      <Image
-        alt="Аватар"
-        source={require("@/assets/images/favicon.png")}
-        resizeMode="contain"
-        width={AVATAR_SIZE}
-        height={AVATAR_SIZE}
-        style={styles.avatar}
-      />
-      <Text style={styles.avatarText}>Имя Фамилия</Text>
-    </View>
-
-    <DrawerItemList {...props} />
-
-    <View style={styles.footer}>
-      <Link href="/login" onPress={logout}>
-        Выйти
-      </Link>
-
-      <Image
-        alt="Purple School"
-        source={require("@/assets/images/purple-school.png")}
-        resizeMode="contain"
-        width={162}
-        height={28}
-        style={styles.footerLogo}
-      />
-    </View>
-  </DrawerContentScrollView>
-)
-
 const drawerScreens: IDrawerScreen[] = [
   {
     name: "profile",
@@ -194,7 +130,6 @@ const drawerScreens: IDrawerScreen[] = [
 export default function ProtectedLayout() {
   const { accessToken } = useAtomValue(authAtom)
   const authLoaded = useAtomValue(authLoadedAtom)
-  const logout = useSetAtom(logoutAtom)
 
   if (!authLoaded) return null
 
@@ -206,7 +141,7 @@ export default function ProtectedLayout() {
     <Drawer
       backBehavior="history"
       screenOptions={screenOptions}
-      drawerContent={(props) => drawerContent(props, logout)}
+      drawerContent={DrawerContent}
     >
       {drawerScreens.map(({ title, label, name, Icon }) => (
         <Drawer.Screen
@@ -242,55 +177,5 @@ const styles = StyleSheet.create({
   image: {
     width: 24,
     height: 24,
-  },
-  drawerContentContainer: {
-    position: "relative",
-    flexGrow: 1,
-    paddingTop: 0,
-    paddingBottom: 0,
-    paddingHorizontal: 0,
-    paddingStart: 0,
-    paddingEnd: 0,
-  },
-  closeButton: {
-    position: "absolute",
-    top: 24,
-    right: 24,
-  },
-  closeImage: {
-    width: 14,
-    height: 14,
-  },
-  avatarContainer: {
-    padding: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: GAPS.g8,
-  },
-  avatarText: {
-    fontFamily: "FiraSans",
-    fontWeight: 400,
-    fontSize: 16,
-    color: COLORS.white,
-  },
-  avatar: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    alignSelf: "center",
-    borderRadius: AVATAR_SIZE / 2,
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderColor: COLORS.gray,
-  },
-  footer: {
-    marginTop: "auto",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: GAPS.g16,
-    marginBottom: 40,
-  },
-  footerLogo: {
-    width: 162,
-    height: 28,
   },
 })
