@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     height: 282,
   },
   text: {
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f18,
     textAlign: "center",

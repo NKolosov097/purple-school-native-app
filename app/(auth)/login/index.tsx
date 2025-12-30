@@ -164,14 +164,14 @@ const styles = StyleSheet.create({
     gap: GAPS.g16,
   },
   errorText: {
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f16,
     color: COLORS.error,
   },
   submitText: {
     textAlign: "center",
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f18,
     color: COLORS.white,

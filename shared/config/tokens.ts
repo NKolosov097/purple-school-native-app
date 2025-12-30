@@ -28,6 +28,8 @@ export const RADIUSES = {
 } as const
 
 export const FONTS = {
+  "FiraSans-Regular": "FiraSans-Regular",
+  "FiraSans-SemiBold": "FiraSans-SemiBold",
   f16: 16,
   f18: 18,
   f20: 20,

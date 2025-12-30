@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: COLORS.violetDark,
 
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f18,
     lineHeight: 1.2,

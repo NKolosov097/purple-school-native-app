@@ -7,7 +7,7 @@ import {
 } from "react"
 import { Animated, StyleSheet, Text, View } from "react-native"
 
-import { COLORS, RADIUSES } from "@shared/config/tokens"
+import { COLORS, FONTS, RADIUSES } from "@shared/config/tokens"
 
 import {
   ToastConfig,
@@ -147,6 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     fontWeight: "500",
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
   },
 })

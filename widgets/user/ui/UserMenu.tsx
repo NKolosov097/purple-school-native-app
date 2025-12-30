@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     gap: GAPS.g8,
   },
   avatarText: {
-    fontFamily: "FiraSans",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f16,
     color: COLORS.white,

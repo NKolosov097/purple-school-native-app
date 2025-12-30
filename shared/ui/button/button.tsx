@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native"
 
-import { COLORS, RADIUSES } from "@shared/config/tokens"
+import { COLORS, FONTS, RADIUSES } from "@shared/config/tokens"
 
 interface IButtonProps extends PressableProps {
   variant?: "default" | "primary" | "link"
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: RADIUSES.r10,
     alignItems: "center",
     justifyContent: "center",
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
   },
   default: { backgroundColor: COLORS.violetDark },
   primary: { backgroundColor: COLORS.primary },

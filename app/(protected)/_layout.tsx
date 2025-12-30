@@ -48,7 +48,7 @@ const screenOptions:
     headerStatusBarHeight: Platform.select({ android: 0, ios: undefined }),
     headerTitleStyle: {
       color: COLORS.white,
-      fontFamily: "FiraSans",
+      fontFamily: FONTS["FiraSans-Regular"],
       fontWeight: 400,
       fontSize: FONTS.f20,
     },
@@ -88,7 +88,7 @@ const screenOptions:
     drawerItemStyle: {
       borderRadius: 0,
       marginHorizontal: 0,
-      fontFamily: "FiraSans",
+      fontFamily: FONTS["FiraSans-Regular"],
       fontWeight: 400,
       fontSize: FONTS.f16,
       color: COLORS.white,

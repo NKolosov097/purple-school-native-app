@@ -16,7 +16,7 @@ export const Link = ({ children, style, ...props }: LinkProps) => {
 
 const styles = StyleSheet.create({
   link: {
-    fontFamily: "FiraSans, FiraSans-Regular",
+    fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f18,
     textAlign: "center",
