@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS["FiraSans-Regular"],
     fontWeight: 400,
     fontSize: FONTS.f18,
-    lineHeight: 1.2,
     color: COLORS.gray,
   },
   eyeIcon: {
