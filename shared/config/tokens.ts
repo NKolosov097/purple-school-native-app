@@ -19,7 +19,8 @@ export const COLORS = {
 export const GAPS = {
   g8: 8,
   g16: 16,
-  g26: 26,
+  g24: 24,
+  g32: 32,
   g50: 50,
 } as const
 
@@ -30,7 +31,10 @@ export const RADIUSES = {
 export const FONTS = {
   "FiraSans-Regular": "FiraSans-Regular",
   "FiraSans-SemiBold": "FiraSans-SemiBold",
+  f14: 14,
   f16: 16,
   f18: 18,
   f20: 20,
 } as const
+
+export const AVATAR_SIZE = 70 as const

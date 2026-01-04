@@ -75,10 +75,10 @@ const screenOptions:
       borderTopRightRadius: 0,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
+      backgroundColor: COLORS.black,
     },
     drawerStyle: {
       backgroundColor: COLORS.black,
-      width: "100%",
       borderRadius: 0,
       borderTopLeftRadius: 0,
       borderTopRightRadius: 0,

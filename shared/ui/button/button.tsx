@@ -5,18 +5,23 @@ import {
   GestureResponderEvent,
   Pressable,
   PressableProps,
+  StyleProp,
   StyleSheet,
+  ViewStyle,
 } from "react-native"
 
 import { COLORS, FONTS, RADIUSES } from "@shared/config/tokens"
 
-interface IButtonProps extends PressableProps {
+interface IButtonProps extends Omit<PressableProps, "style"> {
   variant?: "default" | "primary" | "link"
+  containerStyle?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
   isLoading?: boolean
 }
 
 export const Button = ({
   variant = "default",
+  containerStyle,
   style,
   onPressIn,
   onPressOut,
@@ -33,12 +38,12 @@ export const Button = ({
   })
 
   const customStyles = useMemo(
-    () => ({
-      ...styles.btn,
-      ...styles?.[variant],
-      ...Object.values(style ?? {}),
-      ...(variant === "primary" && { backgroundColor: color }),
-    }),
+    () => [
+      styles.btn,
+      styles[variant],
+      style,
+      variant === "primary" && { backgroundColor: color },
+    ],
     [variant, style, color]
   )
 
@@ -69,7 +74,12 @@ export const Button = ({
   )
 
   return (
-    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} {...props}>
+    <Pressable
+      style={containerStyle}
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      {...props}
+    >
       <Animated.View style={customStyles}>
         {isLoading ? (
           <ActivityIndicator size="small" color={COLORS.white} />
@@ -90,6 +100,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     fontFamily: FONTS["FiraSans-Regular"],
+    paddingInline: 20,
+    flexWrap: "nowrap",
   },
   default: { backgroundColor: COLORS.violetDark },
   primary: { backgroundColor: COLORS.primary },

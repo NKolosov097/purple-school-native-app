@@ -33,11 +33,11 @@ const Login = () => {
     mode: "onBlur",
   })
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async ({ email, password }: LoginFormData) => {
     try {
       const authData = await login({
-        email: data.email,
-        password: data.password,
+        email,
+        password,
       })
 
       if (error) {

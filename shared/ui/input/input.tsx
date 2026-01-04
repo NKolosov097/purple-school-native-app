@@ -26,10 +26,7 @@ export const Input = ({
   return (
     <View style={styles.container}>
       <TextInput
-        style={{
-          ...styles.input,
-          ...Object.values(style ?? {}),
-        }}
+        style={[styles.input, style]}
         placeholderTextColor={placeholderTextColor || COLORS.gray}
         secureTextEntry={type === "password" && !isPasswordVisible}
         {...props}
