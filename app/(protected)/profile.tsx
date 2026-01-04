@@ -7,6 +7,7 @@ import {
   PermissionStatus,
   useCameraPermissions,
 } from "expo-image-picker"
+import { isAvailableAsync, shareAsync } from "expo-sharing"
 
 import { useAtom, useAtomValue } from "jotai"
 import { parse, ValiError } from "valibot"
@@ -25,6 +26,7 @@ import {
 } from "@/entities/user/model/user.state"
 
 import { AVATAR_SIZE, COLORS, FONTS, GAPS } from "@/shared/config/tokens"
+import { SHARE_PROFILE_URL } from "@/shared/constants/api"
 import { Avatar } from "@/shared/ui/avatar/avatar"
 import { Button } from "@/shared/ui/button/button"
 import { Input } from "@/shared/ui/input/input"
@@ -139,68 +141,102 @@ const ProfileScreen = () => {
     }
   }, [user?.profile?.name, setValue])
 
+  const shareProfile = async () => {
+    try {
+      const isSharingAvailable = await isAvailableAsync()
+      if (!isSharingAvailable) {
+        errorToast("Невозможно поделиться профилем")
+        return
+      }
+
+      await shareAsync(SHARE_PROFILE_URL, {
+        dialogTitle: "Поделиться профилем",
+      })
+    } catch (error) {
+      console.log("error: ", error)
+
+      errorToast(
+        error instanceof Error
+          ? error.message
+          : "Произошла ошибка при отправке профиля"
+      )
+    }
+  }
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Button
-          variant="link"
-          containerStyle={styles.avatarButtonContainer}
-          style={styles.avatarButton}
-          onPress={takeNewPhotoForAvatar}
-          isLoading={uploadLoading}
-          disabled={uploadLoading}
-        >
-          <Avatar image={avatarImage} />
-        </Button>
+    <View style={styles.wrapper}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Button
+            variant="link"
+            containerStyle={styles.avatarButtonContainer}
+            style={styles.avatarButton}
+            onPress={takeNewPhotoForAvatar}
+            isLoading={uploadLoading}
+            disabled={uploadLoading}
+          >
+            <Avatar image={avatarImage} />
+          </Button>
 
-        <Upload onUpload={(uri) => setProfileImage(uri)} />
-      </View>
+          <Upload onUpload={(uri) => setProfileImage(uri)} />
+        </View>
 
-      <View>
-        <Controller
-          name="name"
-          control={control}
-          rules={{
-            validate: (value) => {
-              try {
-                parse(profileSchema?.entries?.name, value)
-                return true
-              } catch (validationError) {
-                if (validationError instanceof ValiError) {
-                  return validationError.issues[0].message
+        <View>
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              validate: (value) => {
+                try {
+                  parse(profileSchema?.entries?.name, value)
+                  return true
+                } catch (validationError) {
+                  if (validationError instanceof ValiError) {
+                    return validationError.issues[0].message
+                  }
+                  return "Неизвестная ошибка валидации"
                 }
-                return "Неизвестная ошибка валидации"
-              }
-            },
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              placeholder="Имя"
-              autoCapitalize="words"
-            />
+              },
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                placeholder="Имя"
+                autoCapitalize="words"
+              />
+            )}
+          />
+          {errors?.name?.message && (
+            <Text style={styles.errorText}>{errors?.name?.message}</Text>
           )}
-        />
-        {errors?.name?.message && (
-          <Text style={styles.errorText}>{errors?.name?.message}</Text>
-        )}
+        </View>
+
+        <Button
+          variant="primary"
+          onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+          disabled={isLoading}
+        >
+          <Text style={styles.submitText}>Сохранить</Text>
+        </Button>
       </View>
 
-      <Button
-        variant="primary"
-        onPress={handleSubmit(onSubmit)}
-        isLoading={isLoading}
-        disabled={isLoading}
-      >
-        <Text style={styles.submitText}>Сохранить</Text>
+      <Button variant="link" onPress={shareProfile}>
+        <Text style={styles.shareButtonText}>Поделиться</Text>
       </Button>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    alignItems: "stretch",
+    justifyContent: "space-between",
+    gap: GAPS.g24,
+  },
   container: {
     alignItems: "stretch",
     justifyContent: "flex-start",
@@ -236,6 +272,12 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     fontSize: FONTS.f16,
     color: COLORS.error,
+  },
+  shareButtonText: {
+    color: COLORS.link,
+    fontFamily: FONTS["FiraSans-Regular"],
+    fontWeight: 400,
+    fontSize: FONTS.f18,
   },
 })
 
