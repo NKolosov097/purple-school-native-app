@@ -8,8 +8,8 @@ SplashScreen.preventAutoHideAsync()
 
 export const useFonts = (appReady: boolean = true) => {
   const [fontsLoaded, fontsError] = useFontsExpo({
-    "FiraSans-Regular": require("../assets/fonts/FiraSans-Regular.ttf"),
-    "FiraSans-SemiBold": require("../assets/fonts/FiraSans-SemiBold.ttf"),
+    "FiraSans-Regular": require("../../assets/fonts/FiraSans-Regular.ttf"),
+    "FiraSans-SemiBold": require("../../assets/fonts/FiraSans-SemiBold.ttf"),
   })
 
   useEffect(() => {

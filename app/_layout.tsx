@@ -7,8 +7,8 @@ import { useAtomValue, useSetAtom } from "jotai"
 
 import { Providers } from "@/providers"
 
-import { useFonts } from "@/hooks/useFonts"
-import { useScreenOptions } from "@/hooks/useScreenOptions"
+import { useFonts } from "@/shared/hooks/useFonts"
+import { useScreenOptions } from "@/shared/hooks/useScreenOptions"
 
 import { authLoadedAtom, initAuthAtom } from "@/entities/auth/model/auth.state"
 
