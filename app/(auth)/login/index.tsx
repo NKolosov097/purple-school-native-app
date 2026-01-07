@@ -1,6 +1,13 @@
 import { useAtom } from "jotai"
 import { Controller, useForm } from "react-hook-form"
-import { Image, StyleSheet, Text, View } from "react-native"
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native"
 
 import { useRouter } from "expo-router"
 
@@ -11,6 +18,7 @@ import { useNotification } from "@/features/notification/model/useNotification"
 import { LoginFormData, loginSchema } from "@/entities/auth/model/auth.model"
 import { loginAtom } from "@/entities/auth/model/auth.state"
 
+import { FALLBACK_ERROR_MESSAGE } from "@/shared/constants/api"
 import { Link } from "@/shared/ui/link/link"
 import { COLORS, FONTS, GAPS } from "@shared/config/tokens"
 import { Button } from "@shared/ui/button/button"
@@ -49,11 +57,11 @@ const Login = () => {
       }
     } catch (e) {
       if (e instanceof Error) {
-        errorToast(e?.message ?? error ?? "Произошла неизвестная ошибка")
+        errorToast(e?.message ?? error ?? FALLBACK_ERROR_MESSAGE)
       } else if (typeof e === "string") {
-        errorToast(e ?? error ?? "Произошла неизвестная ошибка")
+        errorToast(e ?? error ?? FALLBACK_ERROR_MESSAGE)
       } else {
-        errorToast(error ?? "Произошла неизвестная ошибка")
+        errorToast(error ?? FALLBACK_ERROR_MESSAGE)
       }
     }
   }
@@ -67,7 +75,10 @@ const Login = () => {
         style={styles.logo}
       />
 
-      <View style={styles.form}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.form}
+      >
         <View>
           <Controller
             name="email"
@@ -140,7 +151,7 @@ const Login = () => {
         >
           <Text style={styles.submitText}>Войти</Text>
         </Button>
-      </View>
+      </KeyboardAvoidingView>
 
       <Link href="/(auth)/recovery-password">Восстановить пароль</Link>
     </View>
