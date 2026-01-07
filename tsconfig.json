@@ -14,8 +14,9 @@
       "@features/*": ["./features/*"],
       "@providers/*": ["./providers/*"],
       "@entities/*": ["./entities/*"],
-      "@hooks/*": ["./hooks/*"]
-    }
+      "@hooks/*": ["./shared/hooks/*"]
+    },
+    "moduleSuffixes": [".ios", ".android", ".native", ".web", ""]
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "extends": "expo/tsconfig.base"

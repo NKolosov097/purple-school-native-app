@@ -26,7 +26,7 @@ import {
 } from "@/entities/user/model/user.state"
 
 import { AVATAR_SIZE, COLORS, FONTS, GAPS } from "@/shared/config/tokens"
-import { SHARE_PROFILE_URL } from "@/shared/constants/api"
+import { PROD_URL } from "@/shared/constants/api"
 import { Avatar } from "@/shared/ui/avatar/avatar"
 import { Button } from "@/shared/ui/button/button"
 import { Input } from "@/shared/ui/input/input"
@@ -149,7 +149,7 @@ const ProfileScreen = () => {
         return
       }
 
-      await shareAsync(SHARE_PROFILE_URL, {
+      await shareAsync(PROD_URL, {
         dialogTitle: "Поделиться профилем",
       })
     } catch (error) {

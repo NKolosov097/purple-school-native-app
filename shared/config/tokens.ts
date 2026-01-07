@@ -5,6 +5,7 @@ export const COLORS = {
   white: "#FAFAFA",
 
   primary: "#6C38CC",
+  primaryLight: "#BE63E5",
   primaryHover: "#452481",
   link: "#A97BFF",
   pink: "#E47AD5",
