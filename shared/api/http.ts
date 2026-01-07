@@ -36,6 +36,7 @@ http.interceptors.response.use(
     const originalUrl = String(originalRequest?.url ?? "")
 
     if (!originalRequest || status !== 401) {
+      logout()
       throw error
     }
 
