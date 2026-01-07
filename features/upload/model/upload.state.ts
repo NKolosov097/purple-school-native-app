@@ -7,6 +7,7 @@ import { IUploadResponse, IUploadState } from "./upload.model"
 import { FILE_API } from "@/features/upload/api/api"
 
 import { http } from "@/shared/api/http"
+import { FALLBACK_ERROR_MESSAGE } from "@/shared/constants/api"
 
 export const uploadAtom = atom<IUploadState>({
   image: null,
@@ -43,7 +44,7 @@ export const uploadImageAtom = atom(
       })
       return data
     } catch (error) {
-      const fallbackMessage = "Произошла неизвестная ошибка"
+      const fallbackMessage = FALLBACK_ERROR_MESSAGE
       const message =
         typeof error === "string"
           ? error

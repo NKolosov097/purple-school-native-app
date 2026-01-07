@@ -7,6 +7,7 @@ import { AUTH_API } from "@/entities/auth/api/api"
 import { AuthResponse, LoginRequest } from "@/entities/auth/model/auth.model"
 
 import { http } from "@/shared/api/http"
+import { FALLBACK_ERROR_MESSAGE } from "@/shared/constants/api"
 
 export interface AuthState {
   accessToken: string | null
@@ -71,7 +72,7 @@ export const loginAtom = atom(
     } catch (error) {
       console.error("Login error: ", error)
 
-      const fallbackMessage = "Произошла неизвестная ошибка"
+      const fallbackMessage = FALLBACK_ERROR_MESSAGE
       const message =
         typeof error === "string"
           ? error

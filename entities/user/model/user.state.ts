@@ -32,9 +32,9 @@ export const loadUserAtom = atom(
       })
       return data
     } catch (error) {
-      console.error("Login error: ", error)
+      console.error("Load user error: ", error)
 
-      const fallbackMessage = "Произошла неизвестная ошибка"
+      const fallbackMessage = FALLBACK_ERROR_MESSAGE
       const message =
         typeof error === "string"
           ? error
