@@ -152,6 +152,7 @@ export interface ICategorizedCourses {
 
 export interface ICourseState {
   courses: ICourse[]
+  remindedCourses: Map<number, Date>
   isLoading: boolean
   error: string | null
 }

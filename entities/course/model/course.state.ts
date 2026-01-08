@@ -10,6 +10,7 @@ import { ICoursesResponse, ICourseState } from "./course.model"
 
 export const courseAtom = atom<ICourseState>({
   courses: [],
+  remindedCourses: new Map(),
   isLoading: false,
   error: null,
 })
@@ -54,5 +55,25 @@ export const loadCoursesAtom = atom(
         isLoading: false,
       })
     }
+  }
+)
+
+export const remindCourseAtom = atom(
+  (get) => get(courseAtom),
+  async (get, set, courseId: number) => {
+    const remindedCourses = new Map(get(courseAtom).remindedCourses)
+
+    if (remindedCourses.has(courseId)) {
+      remindedCourses.delete(courseId)
+    } else {
+      remindedCourses.set(courseId, new Date())
+    }
+
+    set(courseAtom, {
+      ...get(courseAtom),
+      remindedCourses,
+    })
+
+    return get(courseAtom).remindedCourses.get(courseId)
   }
 )

@@ -10,9 +10,14 @@
     "newArchEnabled": true,
     "backgroundColor": "#16171D",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.purpleschool.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
+      "package": "com.purpleschool.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -46,11 +51,24 @@
           ]
         }
       ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icons/notifications/notification-icon.png",
+          "color": "#16171D"
+        }
+      ],
       "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "72b52a15-433b-4282-ae30-168e9b8d662d"
+      }
+    },
+    "owner": "pechenka097"
   }
 }

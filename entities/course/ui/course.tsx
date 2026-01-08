@@ -6,18 +6,27 @@ import { ICourse } from "@/entities/course/model/course.model"
 
 import { COLORS, FONTS, GAPS, RADIUSES } from "@/shared/config/tokens"
 import { COURSE_URL } from "@/shared/constants/api"
+import { NotificationIcon } from "@/shared/icons/Notification"
 import { Button } from "@/shared/ui/button/button"
 import { Tag } from "@/shared/ui/tag/Tag"
 import { getTariffNameByType } from "@/shared/utils/getTariffNameByType"
 
+interface ICourseProps extends ICourse {
+  onNotify?: (courseId: number, alias: string, title: string) => void
+  remindedAt?: Date | null
+}
+
 export const Course = ({
+  id,
   alias,
   shortTitle,
   image,
   tariff,
   courseOnDirection,
   progress,
-}: ICourse) => {
+  onNotify,
+  remindedAt,
+}: ICourseProps) => {
   const handlePress = () => {
     Linking.openURL(`${COURSE_URL}/${alias}`)
   }
@@ -95,10 +104,24 @@ export const Course = ({
       <View style={styles.footer}>
         <Button
           variant="primary"
+          containerStyle={styles.footerBtnContainer}
           style={styles.footerBtn}
           onPress={handlePress}
         >
-          <Text style={styles.footerText}>Продолжить</Text>
+          <Text style={styles.footerText}>
+            {progress ? "Продолжить" : "Купить курс"}
+          </Text>
+        </Button>
+
+        <Button
+          variant="default"
+          style={styles.notificationBtn}
+          onPress={() => onNotify?.(id, alias, shortTitle)}
+        >
+          <NotificationIcon
+            color={COLORS.white}
+            filled={remindedAt ? true : false}
+          />
         </Button>
       </View>
     </View>
@@ -187,13 +210,28 @@ const styles = StyleSheet.create({
     opacity: 0,
   },
   footer: {
+    width: "100%",
+    flex: 1,
     padding: 18,
     backgroundColor: COLORS.violetDark,
     borderBottomLeftRadius: RADIUSES.r10,
     borderBottomRightRadius: RADIUSES.r10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    gap: GAPS.g8,
   },
   footerBtn: {
     height: 44,
+    width: "100%",
+  },
+  footerBtnContainer: {
+    flex: 1,
+  },
+  notificationBtn: {
+    width: 44,
+    height: 44,
+    paddingInline: 0,
   },
   footerText: {
     fontFamily: FONTS["FiraSans-Regular"],
