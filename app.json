@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Purple School Native App",
+    "displayName": "Purple School Native App",
     "slug": "purple-school-native-app",
     "description": "Приложение для прохождения курсов на платформе Purple School",
     "platforms": ["ios", "android"],
