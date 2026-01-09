@@ -4,7 +4,7 @@ import Constants from "expo-constants"
 import { useFonts as useFontsExpo } from "expo-font"
 import { SplashScreen } from "expo-router"
 
-SplashScreen.preventAutoHideAsync()
+void SplashScreen.preventAutoHideAsync()
 
 export const useFonts = (appReady: boolean = true) => {
   const [fontsLoaded, fontsError] = useFontsExpo({
@@ -14,13 +14,17 @@ export const useFonts = (appReady: boolean = true) => {
 
   useEffect(() => {
     if (fontsLoaded && appReady) {
-      SplashScreen.hideAsync()
+      void SplashScreen.hideAsync()
     }
   }, [fontsLoaded, appReady])
 
   useEffect(() => {
     if (fontsError && Constants.debugMode) {
       throw fontsError
+    }
+
+    if (fontsError && !Constants.debugMode) {
+      void SplashScreen.hideAsync()
     }
   }, [fontsError])
 }

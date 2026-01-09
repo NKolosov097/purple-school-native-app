@@ -1,5 +1,5 @@
 export const FALLBACK_ERROR_MESSAGE = "Произошла неизвестная ошибка"
-export const PROD_URL = "https://purpleschool.ru"
-export const COURSE_URL = `${PROD_URL}/course`
 
-export const API_PREFIX = "https://purpleschool.ru/api-v2"
+export const DOMAIN = process.env.EXPO_PUBLIC_DOMAIN
+export const COURSE_URL = `${DOMAIN}/course`
+export const API_PREFIX = `${DOMAIN}/api-v2`

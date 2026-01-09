@@ -1,14 +1,23 @@
 {
   "expo": {
-    "name": "Purple-School-App",
-    "slug": "Purple-School-App",
+    "name": "Purple School Native App",
+    "slug": "purple-school-native-app",
+    "description": "Приложение для прохождения курсов на платформе Purple School",
+    "platforms": ["ios", "android"],
+    "githubUrl": "https://github.com/NKolosov097/purple-school-native-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#16171D"
+    },
     "scheme": "purple-school-app",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "backgroundColor": "#16171D",
+    "primaryColor": "#6C38CC",
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.purpleschool.app",
@@ -25,7 +34,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "output": "static",
@@ -58,17 +68,23 @@
           "color": "#16171D"
         }
       ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Необходимо разрешение для выбора фото профиля"
+        }
+      ],
       "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
     },
+    "owner": "nkolosov097",
     "extra": {
       "eas": {
-        "projectId": "72b52a15-433b-4282-ae30-168e9b8d662d"
+        "projectId": "8edc66e3-ff7d-4bdf-b43b-9640ddc436d3"
       }
-    },
-    "owner": "pechenka097"
+    }
   }
 }
